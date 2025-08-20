@@ -36,7 +36,8 @@ const standaloneQuestionChain = standaloneQuestionPrompt
 
 const answerTemplate = `
 You are a helpful assistant for the board game Catan. Use the following context to answer the question.
-If the answer is not found in the context, say "I'm sorry, I don't know the answer to that."
+If the answer is not given in the context, find the answer in the conversation history if possible.
+If you really don't know the answer, say "I'm sorry, I don't know the answer to that."
 conversation history: {conv_history}
 context: {context}
 question: {question}
@@ -72,7 +73,7 @@ const chain = RunnableSequence.from([
 // console.log(result)
 
 app.post('/chat', async (req, res) => {
-    const { question, conv_history } = req.body;
+    const { question, conv_history = '' } = req.body;
     if (!question) return res.status(400).json({ error: 'Question is required' })
     
     try {
