@@ -72,7 +72,7 @@ const chain = RunnableSequence.from([
 // console.log(result)
 
 app.post('/chat', async (req, res) => {
-    const { question, conv_history = '' } = req.body;
+    const { question, conv_history } = req.body;
     if (!question) return res.status(400).json({ error: 'Question is required' })
     
     try {
